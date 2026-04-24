@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Слова из слова</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Полезные слова</h1>
+<div id="bigWord">ЭНЦИКЛОПЕДИЯ</div>
+
+<div class="inputBlock">
+  <input id="wordsInput" placeholder="Вводи слова через пробел">
+  <p><button onclick="fillWords()">Вставить</button>
+</div>
+
+
+<div class="board" id="board"></div>
+
+
+<script>
+const words = [
+  "ДЕПО", "ДЕЛО", "ДИКЦИЯ", "ДНО", "ДОК", "ДОЛ",
+  "КЕД", "КИНО", "КЛИН", "КЛИП", "КЛОП", "КЛОН", "КОД", "КОЛ",
+  "ЛИК", "ЛИЦО", "ЛЯП",
+  "НИЦ",
+  "ОПЦИЯ",
+  "ПИК", "ПЛЕД", "ПЛЕН", "ПЛОД", "ПОЛ", "ПОЛЕ", "ПОЛК",
+  "ЦИКЛ", "ЦИКЛОП", "ЦИКЛОН", "ЦИНК"
+];
+
+function createBoard() {
+  const board = document.getElementById("board");
+
+  words.forEach(word => {
+    let row = document.createElement("div");
+    row.className = "row";
+    row.dataset.answer = word;
+
+    for (let i = 0; i < word.length; i++) {
+      let input = document.createElement("input");
+      input.disabled = true;
+      row.appendChild(input);
+    }
+
+    board.appendChild(row);
+  });
+}
+
+createBoard();
+
+function fillWords() {
+
+  let input = document.getElementById("wordsInput").value.toUpperCase();
+  let entered = input.split(/[\s,]+/).filter(w => w);
+
+  let rows = document.querySelectorAll(".row");
+
+  entered.forEach(word => {
+
+    // ищем строку ИМЕННО с этим словом
+    let row = [...rows].find(r => r.dataset.answer === word);
+
+    if (row && !row.classList.contains("correct")) {
+
+      let inputs = row.querySelectorAll("input");
+
+      for (let i = 0; i < word.length; i++) {
+        inputs[i].value = word[i];
+      }
+
+    } else {
+      // подсветка ошибки (если слова нет)
+      flashWrong();
+    }
+
+  });
+
+  document.getElementById("wordsInput").value = "";
+}
+
+
+function flashWrong() {
+  let input = document.getElementById("wordsInput");
+  input.style.background = "#ffb3b3";
+
+  setTimeout(() => {
+    input.style.background = "white";
+  }, 300);
+}
+
+function checkWin() {
+  let rows = document.querySelectorAll(".row");
+  let allCorrect = [...rows].every(r => r.classList.contains("correct"));
+
+  if (allCorrect) {
+    setTimeout(() => alert("🎉 Победа!"), 200);
+  }
+}
+
+document.getElementById("wordsInput").addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    fillWords();
+  }
+});
+
+</script>
+
+</body>
+</html>

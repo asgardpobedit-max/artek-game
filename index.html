@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<title>Игра</title>
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="stage">
+  <div class="map">
+
+    <!-- про победу -->
+     <!-- 10-11 классы -->
+    <div class="zone" style="left:15%; top:13%; width:13%; height:25%;"
+         onclick="openGame('svoya-igra')"></div> 
+
+     <!-- 8-9 классы -->
+    <div class="zone" style="left:30%; top:19%; width:10%; height:14%;"
+         onclick="openGame('path-game')"></div>
+
+     <!-- 5-7 класс -->
+    <div class="zone" style="left:9%; top:40%; width:12%; height:10%;"
+         onclick="openGame('img-line')"></div>
+
+    <!-- про науку -->
+     <!-- малышарики -->
+    <div class="zone" style="left:58%; top:18%; width:11%; height:18%;"
+         onclick="openGame('find-objects')"></div>
+
+     <!-- 8-11 классы -->
+    <div class="zone" style="left:71%; top:15%; width:16%; height:21%;"
+         onclick="openGame('cards')"></div>
+
+     <!-- 5-7 классы -->
+    <div class="zone" style="left:80%; top:36.5%; width:14%; height:20%;"
+         onclick="openGame('find-similar')"></div>
+
+    <!-- про бизнес -->
+     <!-- 5-11 классы -->
+    <div class="zone" style="left:25%; top:72%; width:8%; height:16%;"
+         onclick="openGame('emodji')"></div>
+
+     <!-- 8-9 классы -->
+    <div class="zone" style="left:33%; top:62%; width:8%; height:22%;"
+         onclick="openGame('buisnes-viselica')"></div>
+
+     <!-- 7-11 классы -->
+    <div class="zone" style="left:56%; top:62%; width:13%; height: 22%;"
+         onclick="openGame('words-in-word')"></div>
+
+
+  </div>
+</div>
+
+<script>
+function openGame(gameName) {
+
+  // лёгкая вспышка при клике
+  const flash = document.createElement("div");
+  flash.style.position = "fixed";
+  flash.style.inset = "0";
+  flash.style.background = "rgba(255,255,255,0.12)";
+  flash.style.pointerEvents = "none";
+  document.body.appendChild(flash);
+
+  setTimeout(() => flash.remove(), 150);
+
+  // открытие игры
+  window.open(
+    `${gameName}/index.html`,
+    "_blank",
+    "width=1000,height=700"
+  );
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Лаборатория открытий</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="fireworks"></div>
+<div class="top">
+
+  <h1>ЛАБОРАТОРИЯ ОТКРЫТИЙ</h1>
+
+  <div class="score">
+    Найдено: <span id="count">0</span> / 10
+  </div>
+
+  <div class="list">
+    <div onclick="find('microscope')" id="microscope">🔬 микроскоп</div>
+    <div onclick="find('flask')" id="flask">⚗️ колба</div>
+    <div onclick="find('book')" id="book">📘 книга</div>
+    <div onclick="find('globe')" id="globe">🌍 глобус</div>
+    <div onclick="find('pencil')" id="pencil">📏 карандаш</div>
+    <div onclick="find('magnet')" id="magnet">🧲 магнит</div>
+    <div onclick="find('glasses')" id="glasses">🥽 очки</div>
+    <div onclick="find('tubes')" id="tubes">🧪 пробирка</div>
+    <div onclick="find('magnifier')" id="magnifier">🔍 лупа</div>
+    <div onclick="find('thermo')" id="thermo">🌡 термометр</div>
+  </div>
+
+</div>
+
+<div class="game">
+
+  <img src="1.png" class="scene">
+
+</div>
+
+<div id="message">Найди все предметы!</div>
+
+<script>
+
+const items = {
+  microscope: { x: 13, y: 29  , w: 13, h: 47 },
+  flask:      { x: 25.4, y: 39, w: 7, h: 33 },
+  book:       { x: 18,  y: 72, w: 26, h: 23 },
+  globe:      { x: 32.5, y: 32, w: 12.3,  h: 40 },
+
+  pencil:     { x: 78.5, y: 78, w: 9,  h: 14 }, 
+  magnet:     { x: 69, y: 12, w: 8,  h: 21 },
+  glasses:    { x: 60, y: 62, w: 13, h: 17 },
+
+  tubes:      { x: 46, y: 42, w: 13, h: 33 }, 
+  magnifier:  { x: 80, y: 61, w: 11, h: 21 },
+  thermo:     { x: 91, y: 61, w: 9,  h: 22 }
+};
+
+let found = 0;
+
+function hit(item) {
+  const el = document.getElementById(item);
+  const hs = document.getElementById(item + "HS");
+
+  if (el.classList.contains("done")) return;
+
+  el.classList.add("done");
+  hs.classList.add("found");
+
+  found++;
+  document.getElementById("count").innerHTML = found;
+
+  if (found === 10) {
+    document.getElementById("message").innerHTML = "🏆 Все найдено!";
+    launchFireworks();
+  }
+}
+
+function find(item) {
+  document.getElementById("message").innerHTML = "Ищи: " + item;
+}
+
+// создаём зоны автоматически
+window.onload = function () {
+  const game = document.querySelector(".game");
+
+  for (let key in items) {
+    const d = items[key];
+
+    const div = document.createElement("div");
+    div.className = "hotspot";
+    div.id = key + "HS";
+
+    div.style.left = d.x + "%";
+    div.style.top = d.y + "%";
+    div.style.width = d.w + "%";
+    div.style.height = d.h + "%";
+
+    div.onclick = () => hit(key);
+
+    game.appendChild(div);
+  }
+};
+
+function launchFireworks(count = 30) {
+  const container = document.getElementById("fireworks");
+
+  container.innerHTML = ""; // 👈 важно
+
+  for (let i = 0; i < count; i++) {
+    const firework = document.createElement("div");
+    firework.className = "firework";
+
+    firework.style.left = Math.random() * window.innerWidth + "px";
+    firework.style.top = Math.random() * window.innerHeight * 0.6 + "px";
+
+    firework.style.background = "#ffd700";
+
+    container.appendChild(firework);
+
+    setTimeout(() => firework.remove(), 500);
+  }
+}
+
+</script>
+
+
+
+</body>
+</html>

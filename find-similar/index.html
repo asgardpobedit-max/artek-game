@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Что общего?</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Какая наука объединяет эти картинки?</h1>
+
+<div class="game">
+
+  <div class="images">
+    <img id="img1">
+    <img id="img2">
+    <img id="img3">
+    <img id="img4">
+  </div>
+
+  <div class="interactive_block">
+    <input id="answer" placeholder="Твой ответ">
+
+    <div>
+      <button onclick="check()">Проверить</button>
+      <button onclick="hint()">Подсказка</button>
+      <button onclick="next()">Дальше</button>
+    </div>
+
+    <div id="result"></div>
+  </div>
+
+</div>
+
+<script>
+
+  let current = 0;
+
+let games = [
+  ["img1/1.png",
+   "img1/2.png",
+   "img1/3.png",
+   "img1/4.png",
+   "астрономия",
+   "В этой науке изучают космос."],
+
+  ["img2/1.png",
+   "img2/2.png",
+   "img2/3.png",
+   "img2/4.png",
+   "География",
+   "В этой науке изучают мир."],
+
+  ["img3/1.png",
+   "img3/2.png",
+   "img3/3.png",
+   "img3/4.png",
+   "биология",
+   "Это наука о жизни"],
+
+  ["img4/1.png",
+   "img4/2.png",
+   "img4/3.png",
+   "img4/4.png",
+   "геология",
+   "В этой науке узучают строение и структуру земли."],
+
+  ["img5/1.png",
+   "img5/2.png",
+   "img5/3.png",
+   "img5/4.png",
+   "химия",
+   "Предмет, появившийся в восьмом классе"],
+
+  ["img6/1.png",
+   "img6/2.png",
+   "img6/3.png",
+   "img6/4.png",
+   "физика",
+   "Архимед связан с этой наукой."]
+];
+
+function show() {
+
+  let g = games[current];
+
+  document.getElementById("img1").src = g[0];
+  document.getElementById("img2").src = g[1];
+  document.getElementById("img3").src = g[2];
+  document.getElementById("img4").src = g[3];
+
+  document.getElementById("answer").value = "";
+  document.getElementById("result").innerHTML = "";
+}
+
+function check() {
+
+  let input = document.getElementById("answer").value
+    .toLowerCase().trim();
+
+  let correct = games[current][4].toLowerCase();
+
+  if (input === correct) {
+    document.getElementById("result").innerHTML = "✅ Верно!";
+  } else {
+    document.getElementById("result").innerHTML = "❌ Неверно";
+  }
+}
+
+function hint() {
+  document.getElementById("result").innerHTML =
+    "Подсказка: " + games[current][5];
+}
+
+function next() {
+
+  current++;
+
+  if (current >= games.length) {
+    alert("Игра закончена!");
+    current = 0;
+  }
+
+  show();
+}
+
+// показать первое задание
+show();
+
+</script>
+
+</body>
+</html>

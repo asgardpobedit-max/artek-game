@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Своя игра</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Своя игра: Эхо Великой Победы</h1>
+
+<div id="scoreboard">
+
+  <button onclick="addScore('team1')">Команда 1</button>
+  <button onclick="addScore('team2')">Команда 2</button>
+  <button onclick="addScore('team3')">Команда 3</button>
+
+</div>
+
+<div id="scores">
+  <p>Команда 1: <span id="t1">0</span></p>
+  <p>Команда 2: <span id="t2">0</span></p>
+  <p>Команда 3: <span id="t3">0</span></p>
+</div>
+
+<script>
+function addScore(team) {
+
+  let scoreEl = null;
+
+  if (team === "team1") {
+    scoreEl = document.getElementById("t1");
+  }
+
+  if (team === "team2") {
+    scoreEl = document.getElementById("t2");
+  }
+
+  if (team === "team3") {
+    scoreEl = document.getElementById("t3");
+  }
+
+  scoreEl.innerHTML =
+    parseInt(scoreEl.innerHTML) + currentPoints;
+
+
+  currentQuestion = null;
+  currentAnswer = "";
+  currentPoints = 0;
+  currentElement = null;
+
+  document.getElementById("answerBox").innerHTML = "";
+}
+</script>
+
+
+<div class="game">
+
+  <div class="col">
+    <h2>Великая Победа (1941–1945)</h2>
+
+    <div class="q" onclick="openQ(this, 'Как звали маршала, который принимал Парад Победы на Красной площади в 1945 году верхом на белом коне? ', 'Георгий Жуков', 100)">100</div>
+
+    <div class="q" onclick="openQ(this, 'Как назывался план германского командования, который предполагал молниеносную победу?', 'План Барбаросса', 200)">200</div>
+
+    <div class="q" onclick="openQ(this, 'Как называлась наступательная операция 1944 года, в ходе которой была полностью освобождена Белоруссия?', 'Операция «Багратион»', 300)">300</div>
+  </div>
+
+
+  <div class="col">
+    <h2>Оружие Победы</h2>
+
+    <div class="q" onclick="openQ(this, 'Этот легендарный танк считается лучшим средним танком Второй мировой войны и стал главным символом советской танковой мощи.', 'Т-34', 100)">100</div>
+    <div class="q" onclick="openQ(this, 'Грозная реактивная система залпового огня, которую советские солдаты ласково называли женским именем.','«Катюша»', 200)">200</div>
+    <div class="q" onclick="openQ(this, 'Какие важные особенности были у автомобилей в военное время?','Высокая проходимость и низкая высота для маскировки.', 300)">300</div>
+  </div>
+
+  <!-- ===== КАТЕГОРИЯ 3 ===== -->
+  <div class="col">
+    <h2>Искусство и Память</h2>
+
+    <div class="q" onclick="openQ(this, 'Чей голос в годы войны ежедневно произносил по радио фразу «От Советского информбюро...», вселяя веру в победу? ', 'Юрий Левитан', 100)">100</div>
+    <div class="q" onclick="openQ(this, '«Родина-мать» — Это памятник из композиции скульптора Е. Вучетича «Стоять насмерть!» на Мамаевом кургане, высотой?','52м', 200)">200</div>
+    <div class="q" onclick="openQ(this, 'Какая песня, впервые прозвучавшая на Белорусском вокзале в июне 1941 года, стала неофициальным гимном сопротивления?','«Священная война»', 300)">300</div>
+  </div>
+
+  <!-- ===== КАТЕГОРИЯ 4 ===== -->
+  <div class="col">
+    <h2>Города-герои и Крепости</h2>
+
+    <div class="q" onclick="openQ(this, 'Город морской славы, который держал оборону 250 дней, сковав огромные силы противника на южном фланге.', 'Севастополь', 100)">100</div>
+    <div class="q" onclick="openQ(this, 'Этот город на Волге стал местом коренного перелома в войне; после победы в этой битве Германия больше не смогла оправиться.','Сталинград', 200)">200</div>
+    <div class="q" onclick="openQ(this, 'Оборона этой пограничной крепости в июне 1941 года стала первым примером массового героизма советских воинов.','Брестская крепость', 300)">300</div>
+  </div>
+
+</div>
+
+<script>
+
+function openQ(el, question, answer, points) {
+
+  if (el.innerHTML === "—") return;
+  el.style.background = "gray";
+  el.innerHTML = "—";
+
+  currentQuestion = question;
+  currentAnswer = answer;
+  currentPoints = points;
+  currentElement = el;
+
+  document.getElementById("answerBox").innerHTML =
+    question;
+}
+</script>
+
+
+<div id="answerBox"></div>
+
+<button onclick="showAnswer()">!Рассекретить архивы!</button>
+
+<script>
+
+function showAnswer() {
+
+  if (!currentQuestion) return;
+
+  document.getElementById("answerBox").innerHTML =
+    "Ответ: " + currentAnswer;
+}
+</script>
+
+</body>
+</html>

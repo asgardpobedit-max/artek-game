@@ -1,0 +1,157 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 100vh;
+
+  background: url('fon.jpg') no-repeat center/cover;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; /* расстояние между блоками */
+}
+
+h1 {
+  margin-bottom: 20px;
+  color: #640e09;
+  font-size: 60px;
+}
+
+/* КАРТА */
+.map {
+  position: relative;
+  width: 740px;
+  height: 420px;
+
+  margin: 0 auto 20px;
+
+  background: linear-gradient(135deg, #f5f7fa, #f7e4e4);
+  border-radius: 20px;
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,0.25),
+    inset 0 0 15px rgba(255,255,255,0.6);
+
+  overflow: hidden;
+}
+
+/* ЛИНИИ */
+.lines line {
+  stroke: #deb3b0;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+/* ТОЧКИ */
+.point {
+  position: absolute;
+
+  width: 80px;
+  height: 80px;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+  border: 3px dashed #640e09;
+
+  background: radial-gradient(circle at 30% 30%, #ffffff, #dfefff);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: bold;
+  font-size: 20px;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+}
+
+/* ХОВЕР */
+.point:hover {
+  transform: translate(-50%, -50%) scale(1.12);
+  background: #db3434;
+  color: white;
+}
+
+/* СОСТОЯНИЯ */
+.point.done {
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  border: none;
+  color: white;
+}
+
+.point.active {
+  border-color: #f1c40f;
+  box-shadow: 0 0 25px rgba(241,196,15,0.9);
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.point:not(.active):not(.done) {
+  filter: grayscale(60%);
+}
+
+/* СПЕЦ ТОЧКИ */
+.home {
+  background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+  border: none;
+}
+
+.school {
+  background: linear-gradient(135deg, #fab1a0, #e17055);
+  border: none;
+}
+
+/* ПАНЕЛЬ */
+#panel {
+  background: rgba(255,255,255,0.95);
+  padding: 20px;
+  align-items: center;
+  text-align: center;
+  border-radius: 15px;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+#question {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #2c3e50;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: linear-gradient(135deg, #713b3b, #5c0a0a);
+  color: white;
+
+  cursor: pointer;
+  font-weight: bold;
+
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}

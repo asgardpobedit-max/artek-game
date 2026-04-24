@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Угадай по смайликам</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>КОД БИЗНЕСА: РАСШИФРУЙ ПО СМАЙЛИКАМ</h1>
+
+<div class="game">
+
+  <div class="task" data-answer="Акция" data-hint="Ценная бумага дающая право на долю в компании">
+    <div class="emoji">📄📈🗄️</div>
+    <input type="text" placeholder="Твой ответ">
+    <button onclick="check(this)">Утвердить</button>
+    <button onclick="hint(this)">Подсказка</button>
+    <div class="result"></div>
+  </div>
+
+  <div class="task" data-answer="Капитал" data-hint="Ресурсы используемые для получения прибыли">
+    <div class="emoji">💵🏦💳</div>
+    <input type="text" placeholder="Твой ответ">
+    <button onclick="check(this)">Утвердить</button>
+    <button onclick="hint(this)">Подсказка</button>
+    <div class="result"></div>
+  </div>
+
+  <div class="task" data-answer="Индивидуальный предприниматель (ИП)" data-hint="Физическое лицо ведущее бизнес">
+    <div class="emoji">🧑🏻‍💼📊💼</div>
+    <input type="text" placeholder="Твой ответ">
+    <button onclick="check(this)">Утвердить</button>
+    <button onclick="hint(this)">Подсказка</button>
+    <div class="result"></div>
+  </div>
+
+  <div class="task" data-answer="Банкротство" data-hint="Ситуация когда компания не может расплатиться с долгами">
+    <div class="emoji">📉💸🚫</div>
+    <input type="text" placeholder="Твой ответ">
+    <button onclick="check(this)">Утвердить</button>
+    <button onclick="hint(this)">Подсказка</button>
+    <div class="result"></div>
+  </div>
+
+  <div class="task" data-answer="Монополист" data-hint="Одна компания на рынке">
+    <div class="emoji">👑🏢🚷</div>
+    <input type="text" placeholder="Твой ответ">
+    <button onclick="check(this)">Утвердить</button>
+    <button onclick="hint(this)">Подсказка</button>
+    <div class="result"></div>
+  </div>
+
+  <div class="task" data-answer="Инвестор" data-hint="Вкладывает деньги в проект ради прибыли">
+    <div class="emoji">💼🪙👨‍💼</div>
+    <input type="text" placeholder="Твой ответ">
+    <button onclick="check(this)">Утвердить</button>
+    <button onclick="hint(this)">Подсказка</button>
+    <div class="result"></div>
+  </div>
+
+</div>
+
+<script>
+
+
+function check(el) {
+  let task = el.parentElement;
+
+  let input = task.querySelector("input");
+  let userAnswer = input.value.toLowerCase().trim();
+
+  let correct = task.dataset.answer.toLowerCase();
+  
+  let result = task.querySelector(".result");
+
+  if (userAnswer === correct) {
+    result.innerHTML = "✅ Верно!";
+    result.style.color = "green";
+
+    input.disabled = true;
+    el.disabled = true;
+  } else {
+    result.innerHTML = "❌ Неверно";
+    result.style.color = "red";
+  }
+}
+
+function hint(el) {
+  let task = el.parentElement;
+  let result = task.querySelector(".result");
+
+  result.innerHTML = "Подсказка: " + task.dataset.hint;
+  result.style.color = "green";
+}
+
+</script>
+
+</body>
+</html>

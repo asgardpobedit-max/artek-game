@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Капитал</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Игра "Капитал"</h1>
+
+<div id="capital">Капитал: 1000 ₽</div>
+
+<div class="word">
+
+  <div class="letter" data-letter="К">?</div>
+  <div class="letter" data-letter="А">?</div>
+  <div class="letter" data-letter="П">?</div>
+  <div class="letter" data-letter="И">?</div>
+  <div class="letter" data-letter="Т">?</div>
+  <div class="letter" data-letter="А">?</div>
+  <div class="letter" data-letter="Л">?</div>
+  <div class="letter" data-letter="И">?</div>
+  <div class="letter" data-letter="С">?</div>
+  <div class="letter" data-letter="Т">?</div>
+
+</div>
+
+<div class="controls">
+
+  <input id="guess" placeholder="Введи букву">
+
+  <button onclick="checkLetter()">Проверить</button>
+  <button onclick="hint()">Подсказка (-200₽)</button>
+  <button onclick="openLetter()">Открыть букву (-150₽)</button>
+
+</div>
+
+<div id="message"></div>
+<div id="wrongLetters" class="hidden">Ошибки: </div>
+
+<script>
+
+let capital = 1000;
+let word = "КАПИТАЛИСТ";
+let wrongLetters = [];
+
+function updateCapital() {
+  document.getElementById("capital").innerHTML =
+    "Капитал: " + capital + " ₽";
+}
+
+function checkLetter() {
+
+  let input = document.getElementById("guess");
+  let letter = input.value.toUpperCase();
+  input.value = "";
+
+  if (!letter) return;
+
+  let found = false;
+
+  document.querySelectorAll(".letter").forEach(el => {
+    if (el.dataset.letter === letter) {
+      el.innerHTML = letter;
+      found = true;
+    }
+  });
+
+  if (!found) {
+
+    capital -= 100;
+
+    // показываем поле ошибок ТОЛЬКО один раз
+    document.getElementById("wrongLetters").classList.remove("hidden");
+
+    // добавляем букву в массив (без повторов)
+    if (!wrongLetters.includes(letter)) {
+      wrongLetters.push(letter);
+    }
+
+    updateWrongLetters();
+
+    document.getElementById("message").innerHTML =
+      "❌ Ошибка (-100₽)";
+
+  } else {
+    document.getElementById("message").innerHTML =
+      "✔ Есть такая буква!";
+  }
+
+  updateCapital();
+  checkGameOver();
+}
+
+function updateWrongLetters() {
+  let box = document.getElementById("wrongLetters");
+
+  box.innerHTML = "Ошибки: ";
+
+  wrongLetters.forEach(l => {
+    let span = document.createElement("span");
+    span.className = "wrong";
+    span.innerText = l;
+    box.appendChild(span);
+  });
+}
+
+
+function hint() {
+
+  if (capital < 200) return;
+
+  capital -= 200;
+
+  document.getElementById("message").innerHTML =
+    "💡 Подсказка: это слово про человека, используещего свои ресурсы и наемный труд для извлечения прибыли";
+
+  updateCapital();
+}
+
+function openLetter() {
+
+  if (capital < 150) return;
+
+  capital -= 150;
+
+  let hidden = Array.from(document.querySelectorAll(".letter"))
+    .filter(el => el.innerHTML === "?");
+
+  if (hidden.length === 0) return;
+
+  let random = hidden[Math.floor(Math.random() * hidden.length)];
+  random.innerHTML = random.dataset.letter;
+
+  document.getElementById("message").innerHTML =
+    "🔓 Открыта буква";
+
+  updateCapital();
+  checkGameOver();
+}
+
+function checkGameOver() {
+
+  let done = true;
+
+  document.querySelectorAll(".letter").forEach(el => {
+    if (el.innerHTML === "?") done = false;
+  });
+
+  if (done) {
+    document.getElementById("message").innerHTML =
+      "🏆 Победа!";
+  }
+
+  if (capital <= 0) {
+    document.getElementById("message").innerHTML =
+      "💀 Капитал закончился";
+  }
+}
+
+</script>
+
+</body>
+</html>

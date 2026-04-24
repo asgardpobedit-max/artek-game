@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Карточки</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Эволюция знаний</h1>
+
+<div class="game">
+
+  <!-- РЯД 1 -->
+  <div class="row" id="row1">
+    <div class="card white" onclick="openCard(this,1,'Кто сформулировал периодический закон химических элементов?','менделеев','тот самый, кто «разложил» все элементы по полочкам')">?</div>
+
+    <div class="card white" onclick="openCard(this,1,'Кто первым полетел в космос?','гагарин','его фамилия стала символом космической эры')">?</div>
+
+    <div class="card white" onclick="openCard(this,1,'Кто открыл закон всемирного тяготения?','ньютон','история с яблоком стала легендой науки')">?</div>
+
+    <div class="card white" onclick="openCard(this,1,'Что является самой маленькой частицей химического элемента (в школьной модели)?','атом','«неделимая» единица вещества')">?</div>
+  </div>
+
+  <!-- РЯД 2 -->
+  <div class="row locked" id="row2">
+    <div class="card yellow" onclick="openCard(this,2,'Сколько позвонков у человека в среднем?','33–34','обычно больше 30, но меньше 40')">?</div>
+
+    <div class="card yellow" onclick="openCard(this,2,'Какой газ составляет около 78% атмосферы Земли?','азот','основа воздуха, которым мы дышим')">?</div>
+
+    <div class="card yellow" onclick="openCard(this,2,'Что выделяется в процессе фотосинтеза вместе с глюкозой?','кислород','без него невозможна жизнь животных')">?</div>
+
+    <div class="card yellow" onclick="openCard(this,2,'Примерная скорость света в вакууме?','300 000 км/с','самое быстрое, что известно в природе')">?</div>
+  </div>
+
+  <!-- РЯД 3 -->
+  <div class="row locked" id="row3">
+    <div class="card red" onclick="openCard(this,3,'Число Авогадро равно примерно...','6.02×10^23','очень большое число частиц в моле вещества')">?</div>
+
+    <div class="card red" onclick="openCard(this,3,'При каком значении pH среда считается нейтральной?','7','ни кислая, ни щелочная')">?</div>
+
+    <div class="card red" onclick="openCard(this,3,'Ускорение свободного падения на Земле примерно равно...','9.8 м/с²','значение может немного меняться в разных точках Земли')">?</div>
+
+    <div class="card red" onclick="openCard(this,3,'Какая фундаментальная константа связана с квантовой физикой и энергией фотона?','постоянная планка','обозначается h и используется в квантовых расчетах')">?</div>
+  </div>
+
+</div>
+
+<script>
+
+let opened = {1:0,2:0,3:0};
+
+function openCard(el, row, question, answer, hint) {
+
+  if (el.classList.contains("used")) return;
+
+  if (row === 2 && opened[1] < 4) {
+    alert("Сначала закончите первый ряд!");
+    return;
+  }
+
+  if (row === 3 && opened[2] < 4) {
+    alert("Сначала закончите второй ряд!");
+    return;
+  }
+
+  el.classList.add("used");
+  opened[row]++;
+
+  // показываем вопрос внутри карточки
+  el.innerHTML = `
+    <div class="question">${question}</div>
+    <button onclick="showHint(event, this, '${hint}')">Подсказка</button>
+    <button onclick="showAnswer(event, this, '${answer}')">Ответ</button>
+  `;
+
+  unlockRows();
+}
+
+function showHint(e, btn, hint) {
+  e.stopPropagation();
+  btn.parentElement.querySelector(".question").innerHTML =
+    "Подсказка: " + hint;
+}
+
+function showAnswer(e, btn, answer) {
+  e.stopPropagation();
+  btn.parentElement.querySelector(".question").innerHTML =
+    "Ответ: " + answer;
+}
+
+function unlockRows() {
+  if (opened[1] === 4) {
+    document.getElementById("row2").classList.remove("locked");
+  }
+  if (opened[2] === 4) {
+    document.getElementById("row3").classList.remove("locked");
+  }
+}
+
+</script>
+
+</body>
+</html>

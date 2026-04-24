@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Мини-карта</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrapper">
+  <h1>Путь победы</h1>
+
+  <div class="map">
+
+    <div class="zone zone1"></div>
+    <div class="zone zone2"></div>
+    <div class="zone zone3"></div>
+
+    <!-- линии -->
+    <svg class="lines" width="100%" height="100%">
+      <line x1="200" y1="70" x2="600" y2="70"/>
+
+      <line x1="560" y1="70" x2="560" y2="190"/>
+
+      <line x1="600" y1="210" x2="200" y2="210"/>
+
+      <line x1="160" y1="210" x2="160" y2="360"/>
+
+      <line x1="160" y1="350" x2="600" y2="350"/>
+    </svg>
+
+    <!-- дом -->
+    <div class="point home" style="left:50px; top:70px;">🏠</div>
+
+    <!-- РЯД 1 -->
+    <div class="point" style="left:160px; top:70px;" onclick="openQ(1,'В каком городе был подписан окончательный акт капитуляции Германии?','Берлин','Столица страны')">1</div>
+    <div class="point" style="left:360px; top:70px;" onclick="openQ(2,'Какой маршал СССР принимал капитуляцию в этом городе?','Георгий Жуков','_____')">2</div>
+    <div class="point" style="left:560px; top:70px;" onclick="openQ(3,'Как называется последняя крупная операция, проведённая под его командованием в этом городе?','Берлинская операция','_____')">3</div>
+
+    <!-- РЯД 2 -->
+    <div class="point" style="left:560px; top:210px;" onclick="openQ(4,'Как называется здание, взятие которого стало символом завершения этой операции?','Рейхстаг','_____')">4</div>
+    <div class="point" style="left:360px; top:210px;" onclick="openQ(5,'Как называется план Германии, приведший к началу войны с СССР, завершившейся штурмом этого города?','План Барбаросса','_____')">5</div>
+    <div class="point" style="left:160px; top:210px;" onclick="openQ(6,'Как называется крупнейшее танковое сражение, сорвавшее дальнейшее наступление по этому плану?','Курская битва','_____')">6</div>
+
+    <!-- РЯД 3 -->
+    <div class="point" style="left:160px; top:350px;" onclick="openQ(7,'Как называлась операция 1944 года, в ходе которой была освобождена Белоруссия и разгромлена группа армий «Центр»?','Багратион','_____')">7</div>
+    <div class="point" style="left:360px; top:350px;" onclick="openQ(8,'Как назывался подвиг лётчика, направившего свой самолёт на вражескую цель, ставший символом высшей самоотверженности?','Таран','_____ от премии')">8</div>
+    <div class="point" style="left:560px; top:350px;" onclick="openQ(9,'Какое почётное звание присваивалось за выдающийся подвиг и стало символом высшего признания героизма в СССР?','Герой Советского Союза','_____')">9</div>
+    <!-- школа -->
+    <div class="point school" style="left:690px; top:350px;">🏫</div>
+
+  </div>
+
+  <div id="panel">
+    <div id="question">Нажмите на кружок, чтобы начать</div>
+    <button onclick="showHint()">Подсказка</button>
+    <button onclick="showAnswer()">Ответ</button>
+  </div>
+
+</div>
+<script>
+
+let currentAnswer = "";
+let currentHint = "";
+let currentStep = 1;
+
+function openQ(step, question, answer, hint) {
+
+  if (step !== currentStep) {
+    alert("Идите по порядку!");
+    return;
+  }
+
+  currentAnswer = answer;
+  currentHint = hint;
+
+  document.getElementById("question").innerHTML = question;
+}
+
+function showHint() {
+  document.getElementById("question").innerHTML =
+    "Подсказка: " + currentHint;
+}
+
+function showAnswer() {
+  document.getElementById("question").innerHTML =
+    "Ответ: " + currentAnswer;
+
+  markDone();
+}
+
+function markDone() {
+  let points = document.querySelectorAll(".point");
+
+  points[currentStep].classList.add("done");
+  currentStep++;
+
+  if (points[currentStep]) {
+    points[currentStep].classList.add("active");
+  }
+}
+
+</script>
+
+</body>
+</html>
