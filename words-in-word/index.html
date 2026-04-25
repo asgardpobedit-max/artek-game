@@ -59,7 +59,6 @@ function fillWords() {
 
   entered.forEach(word => {
 
-    // ищем строку ИМЕННО с этим словом
     let row = [...rows].find(r => r.dataset.answer === word);
 
     if (row && !row.classList.contains("correct")) {
@@ -70,14 +69,17 @@ function fillWords() {
         inputs[i].value = word[i];
       }
 
+      row.classList.add("correct"); // ⭐ важно
+
     } else {
-      // подсветка ошибки (если слова нет)
       flashWrong();
     }
 
   });
 
   document.getElementById("wordsInput").value = "";
+
+  checkWin(); // ⭐ проверяем победу
 }
 
 
@@ -95,7 +97,9 @@ function checkWin() {
   let allCorrect = [...rows].every(r => r.classList.contains("correct"));
 
   if (allCorrect) {
-    setTimeout(() => alert("🎉 Победа!"), 200);
+    setTimeout(() => {
+      launchWinEffects();
+    }, 200);
   }
 }
 
@@ -105,7 +109,49 @@ document.getElementById("wordsInput").addEventListener("keydown", function(event
   }
 });
 
-</script>
+function launchWinEffects() {
 
+  // звук
+  const sound = document.getElementById("successSound");
+  sound.currentTime = 0;
+  sound.play();
+
+  // фейерверк
+  for (let i = 0; i < 30; i++) {
+
+    let fire = document.createElement("div");
+    fire.style.position = "fixed";
+    fire.style.left = "50%";
+    fire.style.top = "50%";
+    fire.style.width = "6px";
+    fire.style.height = "6px";
+    fire.style.background = `hsl(${Math.random()*360},100%,50%)`;
+    fire.style.borderRadius = "50%";
+    fire.style.pointerEvents = "none";
+
+    document.body.appendChild(fire);
+
+    let angle = Math.random() * 2 * Math.PI;
+    let distance = 150 + Math.random() * 250;
+
+    let x = Math.cos(angle) * distance;
+    let y = Math.sin(angle) * distance;
+
+    fire.animate([
+      { transform: "translate(0,0)", opacity: 1 },
+      { transform: `translate(${x}px, ${y}px)`, opacity: 0 }
+    ], {
+      duration: 1000,
+      easing: "ease-out"
+    });
+
+    setTimeout(() => fire.remove(), 1000);
+  }
+
+  setTimeout(() => alert("🎉 ВСЕ СЛОВА НАЙДЕНЫ!"), 500);
+}
+
+</script>
+<audio id="successSound" src="success.mp3"></audio>
 </body>
 </html>

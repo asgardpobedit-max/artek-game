@@ -46,7 +46,7 @@
     <div class="point" style="left:360px; top:350px;" onclick="openQ(8,'Как назывался подвиг лётчика, направившего свой самолёт на вражескую цель, ставший символом высшей самоотверженности?','Таран','_____ от премии')">8</div>
     <div class="point" style="left:560px; top:350px;" onclick="openQ(9,'Какое почётное звание присваивалось за выдающийся подвиг и стало символом высшего признания героизма в СССР?','Герой Советского Союза','_____')">9</div>
     <!-- школа -->
-    <div class="point school" style="left:690px; top:350px;">🏫</div>
+    <div class="point school" style="left:690px; top:350px;" onclick="finishGame()">🏫</div>
 
   </div>
 
@@ -99,7 +99,66 @@ function markDone() {
   }
 }
 
-</script>
+function finishGame() {
 
+  // проверка — дошли ли до конца
+  if (currentStep <= 9) {
+    alert("Сначала пройдите весь путь!");
+    return;
+  }
+
+  // звук
+  const sound = document.getElementById("successSound");
+  sound.currentTime = 0;
+  sound.play();
+
+  // фейерверк
+  createFireworks();
+}
+
+
+// простая анимация фейерверка
+function createFireworks() {
+
+  for (let i = 0; i < 250; i++) {
+    let fire = document.createElement("div");
+
+    fire.style.position = "fixed";
+    fire.style.left = "50%";
+    fire.style.top = "50%";
+    fire.style.width = "10px";
+    fire.style.height = "10px";
+    fire.style.background = `hsl(${Math.random()*360},100%,50%)`;
+    fire.style.borderRadius = "50%";
+    fire.style.pointerEvents = "none";
+
+    document.body.appendChild(fire);
+
+    let angle = Math.random() * 2 * Math.PI;
+    let distance = 200 + Math.random() * 200;
+
+    let x = Math.cos(angle) * distance;
+    let y = Math.sin(angle) * distance;
+
+    fire.animate([
+      { transform: "translate(0,0)", opacity: 1 },
+      { transform: `translate(${x}px, ${y}px)`, opacity: 0 }
+    ], {
+      duration: 1000,
+      easing: "ease-out"
+    });
+
+    setTimeout(() => fire.remove(), 1000);
+  }
+}
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    document.querySelector("button[onclick='showAnswer()']").click();
+  }
+});
+
+
+</script>
+<audio id="successSound" src="success.mp3"></audio>
 </body>
 </html>

@@ -51,6 +51,9 @@
     <div class="zone" style="left:56%; top:62%; width:13%; height: 22%;"
          onclick="openGame('words-in-word')"></div>
 
+     <div class="zone center-zone"
+     style="left:45%; top:42%; width:10%; height:20%;"
+     onclick="openLink()"></div>
 
   </div>
 </div>
@@ -73,6 +76,13 @@ function openGame(gameName) {
     `${gameName}/index.html`,
     "_blank",
     "width=1000,height=700"
+  );
+}
+
+function openLink() {
+  window.open(
+    "https://xn--80aafadvc9bifbaeqg0p.xn--p1ai/",
+    "_blank"
   );
 }
 </script>
