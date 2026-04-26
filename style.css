@@ -22,7 +22,7 @@ body {
   aspect-ratio: 18 / 10;
   height: 100%;
   max-width: 100%;
-  background: url("map1.png") center/cover no-repeat;
+  background: url("map.png") center/cover no-repeat;
   box-shadow: 0 0 40px rgba(0,0,0,0.6);
 }
 
