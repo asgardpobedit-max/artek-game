@@ -81,7 +81,7 @@ button {
 }
 
 .wrong {
-  text-decoration: line-through;
+  /* text-decoration: line-through; */
   margin: 0 5px;
   font-size: 50px;
   font-weight: bold;
